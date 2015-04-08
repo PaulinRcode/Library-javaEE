@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -18,6 +20,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "tbl_funcionarios")
+@NamedQueries({@NamedQuery(name = "Funcionario.listar" , query ="SELECT funcionario FROM Funcionario funcionario" ),
+@NamedQuery(name = "Funcionario.buscarPorCodigo", query = "SELECT funcionario FROM Funcionario funcionario WHERE funcionario.codigo = :codigo"),
+@NamedQuery(name = "Funcionario.autenticar", query = "SELECT funcionario FROM Funcionario funcionario WHERE funcionario.cpf = :cpf AND funcionario.senha = :senha")})
 public class Funcionario {
 
     @Id
