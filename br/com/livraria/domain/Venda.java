@@ -20,6 +20,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  *
@@ -27,8 +28,9 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "tbl_vendas")
-@NamedQueries({@NamedQuery(name = "Venda.listar", query = "SELECT venda FROM Venda venda"),
-@NamedQuery(name = "Venda.buscarPorCodigo", query = "SELECT venda FROM Venda venda WHERE venda.codigo = :codigo")})
+@NamedQueries({
+    @NamedQuery(name = "Venda.listar", query = "SELECT venda FROM Venda venda"),
+    @NamedQuery(name = "Venda.buscarPorCodigo", query = "SELECT venda FROM Venda venda WHERE venda.codigo = :codigo")})
 public class Venda {
 
     @Id
@@ -39,13 +41,16 @@ public class Venda {
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "hr_venda", nullable = false)
     private Date horario;
-    
-    @Column(name = "vl_venda", precision = 7, scale = 2 , nullable = false)
+
+    @Column(name = "vl_venda", precision = 7, scale = 2, nullable = false)
     private BigDecimal valor;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tbl_funcionarios_cd_funcionario", referencedColumnName = "cd_funcionario", nullable = false)
     private Funcionario funcionario;
+    
+    @Transient
+    private Integer quantidade;
 
     public Long getCodigo() {
         return codigo;
@@ -78,7 +83,14 @@ public class Venda {
     public void setFuncionario(Funcionario funcionario) {
         this.funcionario = funcionario;
     }
-    
-    
 
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    
 }
