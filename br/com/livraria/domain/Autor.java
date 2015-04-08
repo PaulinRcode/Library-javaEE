@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -18,13 +20,17 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "tbl_autores")
+@NamedQueries({
+    @NamedQuery(name = "Autor.listar", query = "SELECT autor FROM Autor autor")})
+    @NamedQuery(name = "Autor.buscarPorCodigo", query = "SELECT autor FROM Autor autor WHERE autor.codigo = :codigo")
 public class Autor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "cd_autor")
     private Long codigo;
-
+    
+    
     @Column(name = "nm_autor", length = 50, nullable = false)
     private String nome;
 
