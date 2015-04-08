@@ -13,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -22,6 +24,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="tbl_livros")
+@NamedQueries({@NamedQuery(name="Livro.listar", query = "SELECT livro FROM Livro livro"),
+@NamedQuery(name = "Livro.buscarPorCodigo", query = "SELECT livro FROM Livro livro WHERE livro.codigo = :codigo")})
 public class Livro {
     
     @Id
