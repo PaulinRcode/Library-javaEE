@@ -24,24 +24,25 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "tbl_itens")
-@NamedQueries({@NamedQuery(name = "Item.listar", query = "SELECT item FROM Item item"),
-@NamedQuery(name = "Item.buscarPorCodigo", query = "SELECT item FROM Item item WHERE item.codigo = :codigo")})
+@NamedQueries({
+    @NamedQuery(name = "Item.listar", query = "SELECT item FROM Item item"),
+    @NamedQuery(name = "Item.buscarPorCodigo", query = "SELECT item FROM Item item WHERE item.codigo = :codigo")})
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "cd_item")
     private Long codigo;
-    
+
     @Column(name = "qt_item", nullable = false)
     private Integer quantidade;
-    
+
     @Column(name = "vl_parcial_item", precision = 7, scale = 2, nullable = false)
     private BigDecimal valor;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tbl_vendas_cd_venda", referencedColumnName = "cd_venda", nullable = false)
     private Venda venda;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tbl_livros_cd_livro", referencedColumnName = "cd_livro", nullable = false)
     private Livro livro;
@@ -85,9 +86,35 @@ public class Item {
     public void setLivro(Livro livro) {
         this.livro = livro;
     }
-    
-    
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return "Item [codigo=" + codigo + ", quantidade=" + quantidade + ", valor=" + valor + ", venda=" + venda + ", livro=" + livro + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) 
+            return true;
+        if (obj == null) 
+            return false;       
+        if (getClass() != obj.getClass()) 
+            return false;        
+        Item other = (Item) obj;
+        if (codigo == null) {
+            if (other.codigo != null) 
+                return false;            
+        } else if (!codigo.equals(other.codigo)) 
+            return false;        
+        return true;
+
+    }
 }
