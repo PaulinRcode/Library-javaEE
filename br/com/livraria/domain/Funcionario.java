@@ -13,6 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.br.CPF;
 
 /**
  *
@@ -30,15 +33,21 @@ public class Funcionario {
     @Column(name = "cd_funcionario")
     private Long codigo;
 
+    @NotEmpty(message = "O campo nome é obrigatório")
+    @Size(min = 5, max = 50, message = "Tamanho inválido para o campo nome (5 - 50)")
     @Column(name = "nm_funcionario", length = 50, nullable = false)
     private String nome;
 
+    @CPF(message = "O CPF informado é inválido")
     @Column(name = "sg_cpf", length = 14, nullable = false, unique = true)
     private String cpf;
 
+    @NotEmpty(message = "O campo senha é obrigatório")
+    @Size(min = 5, max = 50, message = "Tamanho inválido para o campo senha (6 - 8)")
     @Column(name = "cd_senha", length = 32, nullable = false)
     private String senha;
 
+    @NotEmpty(message = "O campo função é obrigatório")
     @Column(name = "ds_funcao", length = 50, nullable = false)
     private String funcao;
 
@@ -82,4 +91,34 @@ public class Funcionario {
         this.funcao = funcao;
     }
 
+    @Override
+    public String toString() {
+        return "Funcionario [codigo=" + codigo + ", nome=" + nome + ", cpf=" + cpf + ", senha=" + senha + ", funcao=" + funcao + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) 
+            return true;
+        if (obj == null) 
+            return false;       
+        if (getClass() != obj.getClass()) 
+            return false;        
+        Funcionario other = (Funcionario) obj;
+        if (codigo == null) {
+            if (other.codigo != null) 
+                return false;            
+        } else if (!codigo.equals(other.codigo)) 
+            return false;        
+        return true;
+
+    }
 }
