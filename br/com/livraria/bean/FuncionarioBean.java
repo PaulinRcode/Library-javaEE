@@ -16,11 +16,11 @@ import br.com.livraria.util.FacesUtil;
  * @author Paulinho
  */
 import java.util.List;
+import org.apache.commons.codec.digest.DigestUtils;
 
 @ManagedBean
 @ViewScoped
 public class FuncionarioBean {
-
     private Funcionario funcionarioCadastro;
 
     private List<Funcionario> listarFuncionarios;
@@ -76,6 +76,7 @@ public class FuncionarioBean {
     public void salvar() {
         try {
             FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+            funcionarioCadastro.setSenha(DigestUtils.md5Hex(funcionarioCadastro.getSenha()));
             funcionarioDAO.salvar(funcionarioCadastro);
 
             funcionarioCadastro = new Funcionario();
@@ -112,7 +113,7 @@ public class FuncionarioBean {
             FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
             funcionarioDAO.excluir(funcionarioCadastro);
 
-            FacesUtil.adicionarMsgInfo("Funcionário excluido com sucessco");
+            FacesUtil.adicionarMsgInfo("Funcionário excluido com sucesso");
         } catch (RuntimeException ex) {
             FacesUtil.adicionarMsgError("Erro ao tentar remover um funcionário:" + ex.getMessage());
         }
@@ -121,6 +122,7 @@ public class FuncionarioBean {
     public void editar() {
         try {
             FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+            funcionarioCadastro.setSenha(DigestUtils.md5Hex(funcionarioCadastro.getSenha()));
             funcionarioDAO.editar(funcionarioCadastro);
 
             FacesUtil.adicionarMsgInfo("Funcionário editado com sucesso");
