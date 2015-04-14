@@ -15,6 +15,9 @@
     
     <!-- Gerenciamento de sessão -->
     <property name="hibernate.current_session_context_class">thread</property>
+    
+    <!-- Desabilita a cache -->
+    <property name="hibernate.cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
             
     <!-- Exibir comandos SQL -->
     <property name="hibernate.show_sql">true</property>
