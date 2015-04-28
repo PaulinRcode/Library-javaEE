@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    
+    <ui:composition template="/templates/templateGeral.xhtml">
+        <ui:define name="conteudo">
+            <h:form id="frmVendasPesquisa">
+                <p:toolbar>
+                    <f:facet name="left">
+                        <h:outputText value="Vendas"/>
+                    </f:facet>
+                </p:toolbar>
+                
+                <p:panelGrid columns="5">
+                    <p:outputLabel value="Data Inicial:"/>
+                    <p:calendar value="#{vendaBean.filtro.dataInicial}"/>
+                    
+                    <p:outputLabel value="Data Final:" />
+                    <p:calendar value="#{vendaBean.filtro.dataFinal}"/>
+                    
+                    <p:commandButton value="Buscar" actionListener="#{vendaBean.buscar}"
+                                     update=":msgGlobal :frmVendasPesquisa:tblVendasPesquisa" />
+                 </p:panelGrid>
+                
+                <p:separator/>
+                
+                <p:dataTable id="tblVendasPesquisa"
+                             emptyMessage="Nenhum registro encontrado."
+                             value="#{vendaBean.listaVendas}" var="venda" rows="8"
+                             paginator="true">
+                
+                    <p:column headerText="Código">
+                        <h:outputText value="#{venda.codigo}"/>
+                    </p:column>
+                    
+                    <p:column headerText="Horário">
+                        <h:outputText value="#{venda.horario}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm"
+                                               timeZone="America/Sao_Paulo"/>
+                        </h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Valor Total">
+                        <h:outputText value="#{venda.valor}">
+                            <f:convertNumber pattern="0.00"/>
+                        </h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Funcionário">
+                        <h:outputText value="#{venda.funcionario.nome}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+            
+        </ui:define>
+        
+        
+    </ui:composition>
+    
+</html>
