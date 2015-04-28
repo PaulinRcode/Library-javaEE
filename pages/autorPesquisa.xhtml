@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition template="/templates/templateGeral.xhtml">
+        <ui:define name="metadata">
+            <f:metadata>
+                <f:event listener="#{autorBean.carregarPesquisa}" type="preRenderView" />
+            </f:metadata>
+        </ui:define>
+        <ui:define name="conteudo">
+            <h:form>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <h:outputText value="Autores"/>
+                    </f:facet>
+                </p:toolbar>
+
+                <p:dataTable emptyMessage="Nenhum registro encontrado."
+                             value="#{autorBean.listaAutores}"
+                             filteredValue="#{autorBean.listaAutoresFiltrados}"
+                             var="autor" rows="8" paginator="true">
+                    <f:facet name="footer">
+                        <p:button value="Novo" outcome="/pages/autorCadastro.xhtml">
+                            <f:param name="autacao" value="Novo" />
+                        </p:button>
+                    </f:facet>
+
+                    <p:column headerText="Código">
+                        <h:outputText value="#{autor.codigo}"/>
+                    </p:column>
+
+                    <p:column headerText="Nome" filterBy="#{autor.nome}"
+                              sortBy="#{autor.nome}">
+                        <h:outputText value="#{autor.nome}" />
+                    </p:column>
+
+                    <p:column headerText="Opções">
+                        <p:button value="Excluir" outcome="/pages/autorCadastro.xhtml">
+                            <f:param name="autacao" value="Excluir" />
+                            <f:param name="autcod" value="#{autorBean.codigo}"/>
+                        </p:button>
+
+                        <p:button value="Editar" outcome="/pages/autorCadastro.xhtml">
+                            <f:param name="autacao" value="Editar" />
+                            <f:param name="autcod" value="#{autorBean.codigo}"/>
+                        </p:button>
+                    </p:column>
+                </p:dataTable>
+            </h:form> 
+        </ui:define>
+    </ui:composition>
+</html>
