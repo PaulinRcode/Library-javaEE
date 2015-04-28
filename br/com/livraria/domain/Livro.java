@@ -20,7 +20,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-//import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
@@ -71,7 +71,7 @@ public class Livro {
 
     @NotNull(message = "O campo preço é obrigatório")
     @DecimalMin(value = "0.00", message = "Informe um valor maior ou igual a zero para o campo preço")
-    //@DecimalMax(value = "99999,99", message = "Infome um valor menor que 100 mil para o campo preço")
+    @DecimalMax(value = "99999.99", message = "Infome um valor menor que 100 mil para o campo preço")
     @Digits(integer = 5, fraction = 2, message = "Informe um valor válido para o campo preço")
     @Column(name = "vl_preco", precision = 7, scale = 2, nullable = false)
     private BigDecimal preco;
