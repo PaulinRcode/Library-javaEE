@@ -30,7 +30,5 @@ public class VendaFilter {
     public void setDataInicial(Date dataInicial) {
         this.dataInicial = dataInicial;
     }
-    
-    
-    
+
 }
