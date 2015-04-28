@@ -1,0 +1,15 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 11/04/2015, 03:37:27
+    Author     : Paulinho
+*/
+
+@CHARSET "UTF-8";
+
+.ui-widget, .ui-widget .ui-widget{
+    font-size: 95%;
+}

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    
+    <ui:composition template="/templates/templateGeral.xhtml">
+        <ui:define name="metadata">
+            <f:metadata>
+                <f:event listener="#{livroBean.carregarPesquisa}"
+                         type="preRenderView" />
+            </f:metadata>
+        </ui:define>
+        
+        <ui:define name="conteudo">
+            <h:form>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <h:outputText value="Livros" />
+                    </f:facet>
+                </p:toolbar>
+                
+                <p:dataTable id="tblLivros"
+                             emptyMessage="Nenhum registro encontrado."
+                             value="#{livroBean.listarLivros}"
+                             filteredValue="#{livroBean.listarLivrosFiltrados}"
+                             var="livro" rows="8" paginator="true">
+                
+                    <f:facet name="header">
+                        <h:commandLink>
+                            <p:graphicImage library="images" name="excel.png" width="24" />
+                            <p:dataExporter type="xls" target="tblLivros" fileName="livros"/>
+                        </h:commandLink>
+                        
+                        <h:commandLink>
+                            <p:graphicImage library="images" name="pdf.png" width="24" />
+                            <p:dataExporter type="pdf" target="tblLivros" fileName="livros" encoding="ISO-8859-1"/>
+                        </h:commandLink>
+                    </f:facet>
+                    
+                    <f:facet name="footer">
+                        <p:button value="Novo" outcome="/pages/livroCadastro.xhtml">
+                            <f:param name="livacao" value="Novo"/>
+                        </p:button>
+                    </f:facet>
+                    
+                    <p:column headerText="Código" style="width: 5%">
+                        <h:outputText value="#{livro.codigo}"/>
+                    </p:column>
+                
+                    <p:column headerText="Nome" style="width: 5%;">
+                        <h:outputText value="#{livro.nome}"/>
+                    </p:column>
+                    
+                    <p:column headerText="Autor" style="width: 5%;">
+                        <h:outputText value="#{livro.autor}"/>
+                    </p:column>
+                    
+                    <p:column headerText="Editora" style="width: 5%;">
+                        <h:outputText value="#{livro.nomeEditora}"/>
+                    </p:column>
+                    
+                    <p:column headerText="Data da Edição" style="width: 5%">
+                        <h:outputText value="#{livro.data}"/>
+                    </p:column>
+                    
+                    <p:column headerText="Descrição" style="width: 5%;">
+                        <h:outputText value="#{livro.descricao}"/>
+                    </p:column>
+                    
+                    <p:column headerText="Preço" style="width: 5%;">
+                        <h:outputText value="#{livro.preco}"/>
+                    </p:column>
+                        
+                </p:dataTable>
+                
+            </h:form>
+            
+        </ui:define>
+        
+    </ui:composition>
+    
+</html>

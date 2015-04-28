@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    
+    <ui:composition template="/templates/templateGeral.xhtml">
+        <ui:define name="metadata">
+            <f:metadata>
+                <f:event listener="#{funcionarioBean.carregarPesquisa}"
+                         type="preRenderView"/>
+            </f:metadata>
+        </ui:define>
+        
+        <ui:define name="conteudo">
+            <h:form>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <h:outputText value="Funcionários"/>
+                    </f:facet>
+                </p:toolbar>
+                
+                <p:dataTable emptyMessage="Nenhum registro encontrado."
+                             value="#{funcionarioBean.listarFuncionarios}"
+                             filteredValue="#{funcionarioBean.listarFuncionariosFiltrados}"
+                             var="funcionario" rows="8" paginator="true">
+                    
+                    <f:facet name="footer">
+                        <p:button value="Novo" outcome="/pages/funcionarioCadastro.xhtml">
+                            <f:param name="funacao" value="Novo"/>
+                        </p:button>
+                    </f:facet>
+                
+                    <p:column headerText="Código" style="width: 10%;">
+                       <h:outputText value="#{funcionario.codigo}"/>
+                   </p:column>
+                    
+                    <p:column headerText="Nome" filterBy="#{funcionario.nome}"
+                              sortBy="#{funcionario.nome}">
+                        <h:outputText value="#{funcionario.nome}"/>
+                    </p:column>
+                    
+                    <p:column headerText="CPF" filterBy="#{funcionario.cpf}"
+                              sortBy="#{funcionario.cpf}">
+                        <h:outputText value="#{funcionario.cpf}"/>
+                    </p:column>
+                    
+                    <p:column headerText="Funcão" filterBy="#{funcionario.funcao}"
+                              sortBy="#{funcionario.funcao}">
+                        <h:outputText value="#{funcionario.funcao}"/>
+                    </p:column>
+                    
+                    <p:column headerText="Opções" style="width: 15%;">
+                        <p:button value="Excluir"
+                            outcome="/pages/funcionarioCadastro.xhtml">
+                            <f:param name="funacao" value="Excluir"/>
+                            <f:param name="funcod" value="#{funcionario.codigo}"/>
+                        </p:button>
+                        
+                        <p:button value="Editar" outcome="/pages/funcionarioCadastro.xhtml">
+                            <f:param name="funacao" value="Editar"/>
+                            <f:param name="funcod" value="#{funcionario.codigo}"/>
+                        </p:button>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+         </ui:define>
+    </ui:composition>
+    
+</html>

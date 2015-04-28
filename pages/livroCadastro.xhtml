@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition template="/templates/templateGeral.xhtml">
+        <ui:define name="metadata">
+            <f:metadata>
+                <f:viewParam name="livacao" value="#{livroBean.acao}" />
+                <f:viewParam name="livcod" value="#{livroBean.codigo}"/>
+
+                <f:event listener="#{livroBean.carregarCadastro}"
+                         type="preRenderView"/>
+            </f:metadata>    
+        </ui:define>
+
+        <ui:define name="conteudo">
+            <h:form id="frmLivCad">
+                <p:toolbar>
+                    <f:facet name="left">
+                        <h:outputText value="Livros" />
+                    </f:facet>
+                </p:toolbar>
+
+                <p:panelGrid id="pnlLivCadDados" columns="2">
+                    <p:outputLabel value="Código:" />
+                    <p:inputText size="10" readonly="true"
+                                 value="#{livroBean.livroCadastro.codigo}" />
+
+                    <p:outputLabel value="Nome:"/>
+                    <p:inputText maxlength="50" size="30"
+                                 value="#{livroBean.livroCadastro.nome}">
+                        <f:validateBean/>
+                    </p:inputText>
+
+                    <p:outputLabel value="Editora:"/>
+                    <p:inputText maxlength="50" size="30" 
+                                 value="#{livroBean.livroCadastro.nomeEditora}">
+                        <f:validateBean/>
+                    </p:inputText>
+
+                    <p:outputLabel value="Data Edição:"/>
+                    <p:inputText 
+                        value="#{livroBean.livroCadastro.data}">
+                        <f:validateBean/>
+                    </p:inputText>
+
+                    <p:outputLabel value="Quantidade:"/>
+                    <p:inputText value="#{livroBean.livroCadastro.quantidade}">
+                        <f:validateBean/>
+                    </p:inputText>
+
+                    <p:outputLabel value="Descrição:"/>
+                    <p:inputText maxlength="50" size="30"
+                                 value="#{livroBean.livroCadastro.descricao}">
+                        <f:validateBean/>
+                    </p:inputText>
+
+                    <p:outputLabel value="Preço:"/>
+                    <p:inputText size="30" value="#{livroBean.livroCadastro.preco}"
+                                 converterMessage="Informe um valor válido para o campo preço">
+                        <f:convertNumber/>
+                        <f:validateBean/>
+                    </p:inputText>
+                </p:panelGrid>
+
+                <h:panelGrid columns="5">
+                    <p:commandButton value="Novo" actionListener="#{livroBean.novo}"
+                                     update=":frmLivCad:pnlLivCadDados"/>
+
+                    <p:commandButton value="Salvar" actionListener="#{livroBean.salvar}"
+                                     update=":msgGlobal :frmLivCad:pnlLivCadDados"/>
+
+                    <p:commandButton value="Excluir" actionListener="#{livroBean.excluir}"
+                                     update=":msgGlobal"/>
+
+                    <p:commandButton value="Editar" actionListener="#{livroBean.editar}"
+                                     update=":msgGlobal" />
+
+                    <p:button value="Voltar" outcome="/pages/livroPesquisa.xhtml?faces-redirect=true"/>
+
+                </h:panelGrid>
+            </h:form>
+       </ui:define>
+    </ui:composition>
+</html>
