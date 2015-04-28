@@ -10,56 +10,60 @@ and open the template in the editor.
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    
+
     <ui:composition template="/templates/templateGeral.xhtml">
         <ui:define name="metadata">
             <f:metadata>
                 <f:viewParam name="autacao" value="#{autorBean.acao}" />
                 <f:viewParam name="autcod" value="#{autorBean.codigo}" />
-                
+
                 <f:event listener="#{autorBean.carregarCadastro}"
                          type="preRenderView"></f:event>
             </f:metadata>
         </ui:define>
-        
+
         <ui:define name="conteudo">
             <h:form id="frmAutCad">
                 <p:toolbar>
-                    <f:facet name="left"></f:facet>
-                    <h:outputText value="Autores" />
+                    <f:facet name="left">
+                        <h:outputText value="Autores" />
+                    </f:facet>
+
                 </p:toolbar>
                 <h:panelGrid id="pnlAutCadDados" columns="2">
                     <p:outputLabel value="Código" />
                     <p:inputText size="10" readonly="true"
                                  value="#{autorBean.autorCadastro.codigo}" />
-                    
+
                     <p:outputLabel value="Nome" />
                     <p:inputText maxlength="50" size="30"
                                  value="#{autorBean.autorCadastro.nome}"
-                                 readonly="#{autorBean.acao =='Excluir'}">
+                                 readonly="#{autorBean.acao == 'Excluir'}">
                         <f:validateBean />
                     </p:inputText>
                 </h:panelGrid>
-                
+
                 <h:panelGrid columns="5">
                     <p:commandButton value="Novo" actionListener="#{autorBean.novo}"
-                                     update="frmAutCad:pnlAutCadDados"/>
-                    
+                                     update=":frmAutCad:pnlAutCadDados"
+                                     />
+
                     <p:commandButton value="Salvar" actionListener="#{autorBean.salvar}"
-                                     update="msgGlobal :frmAutCad:pnlAutCadDados"
-                                     rendered="#{autorBean.acao == 'Novo'}"/>
-                   
+                                     update=":msgGlobal :frmAutCad:pnlAutCadDados"
+                                     />
+
                     <p:commandButton value="Excluir" actionListener="#{autorBean.excluir}"
                                      update=":msgGlobal"
-                                     rendered="#{autorBean.acao == 'Editar'}"/>
-                                                           
-                    <p:commandButton value="Editar" actionListener="#{autorBean.acao == 'Editar'}" />
-                    
-                    <p:commandButton value="Voltar" action=""/>
+                                     />
+
+                    <p:commandButton value="Editar" actionListener="#{autorBean.editar}"
+                                     update=":msgGlobal" />
+
+                    <p:button value="Voltar" outcome="/pages/autorPesquisa.xhtml?faces-redirect=true" />
                 </h:panelGrid>
-                
+
             </h:form>
-            
+
         </ui:define>
     </ui:composition>
 </html>
